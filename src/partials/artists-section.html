@@ -1,0 +1,138 @@
+<!-- <section class="artists" id="Artists">
+  <div class="container">
+    <h2 class="artists__title">Artists</h2>
+    <p class="artists__subtitle">Explore Your New Favorite Artists</p>
+    <div class="artists-layout ar">
+      <div class="artists-content">
+        <ul class="artists__grid" data-artists-grid></ul>
+
+        <div class="artists__loader" data-artists-loader hidden>
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="sr-only">Loading…</span>
+        </div>
+
+        <button class="btn btn--primary artists-more" data-artists-load hidden>
+          <span data-btn-text>Load More</span>
+          <svg class="icon-artists-learn-more" width="14" height="24">
+            <use href="/img/icons.svg#icon-learn-more-btn"></use>
+          </svg>
+          <span class="spinner spinner--btn" data-btn-spinner hidden></span>
+        </button>
+
+        <nav class="pagination" data-pagination hidden></nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<template id="artist-item-tpl">
+  <li class="artist-card">
+    <a href="#" class="artist-card__link">
+      <img src="" alt="artist" class="artist-card__img" loading="lazy" />
+      <div class="artist-card__info">
+        <h3 class="artist-card__name"></h3>
+        <p class="artist-card__genre"></p>
+      </div>
+    </a>
+  </li>
+</template>
+<script>
+  const grid = document.querySelector('[data-artists-grid]');
+  const loader = document.querySelector('[data-artists-loader]');
+  const loadMoreBtn = document.querySelector('[data-artists-load]');
+  const artistTpl = document.querySelector('#artist-item-tpl');
+
+  const artists = [
+    {
+      name: 'Eminem',
+      genre: 'Rap',
+      image: 'https://via.placeholder.com/300x200?text=Eminem',
+    },
+    {
+      name: 'Adele',
+      genre: 'Pop',
+      image: 'https://via.placeholder.com/300x200?text=Adele',
+    },
+    {
+      name: 'Imagine Dragons',
+      genre: 'Rock',
+      image: 'https://via.placeholder.com/300x200?text=Imagine+Dragons',
+    },
+    {
+      name: 'Beyoncé',
+      genre: 'R&B',
+      image: 'https://via.placeholder.com/300x200?text=Beyonce',
+    },
+  ];
+
+  let page = 1;
+  const perPage = 2;
+
+  function renderArtists(list) {
+    list.forEach(artist => {
+      const clone = artistTpl.content.cloneNode(true);
+
+      const link = clone.querySelector('.artist-card__link');
+      const img = clone.querySelector('.artist-card__img');
+      const name = clone.querySelector('.artist-card__name');
+      const genre = clone.querySelector('.artist-card__genre');
+
+      link.href = '#';
+      img.src = artist.image;
+      img.alt = artist.name;
+      name.textContent = artist.name;
+      genre.textContent = artist.genre;
+
+      grid.appendChild(clone);
+    });
+  }
+
+  function loadArtists() {
+    loader.hidden = false;
+    setTimeout(() => {
+      loader.hidden = true;
+
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
+      const slice = artists.slice(start, end);
+
+      renderArtists(slice);
+
+      if (end < artists.length) {
+        loadMoreBtn.hidden = false;
+      } else {
+        loadMoreBtn.hidden = true;
+      }
+
+      page++;
+    }, 700);
+  }
+
+  loadMoreBtn.addEventListener('click', loadArtists);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadArtists();
+  });
+</script> -->
+
+<section class="artists" id="Artists">
+  <div class="container">
+    <h2 class="artists__title">Artists</h2>
+    <p class="artists__subtitle">Explore Your New Favorite Artists</p>
+
+    <div class="artists__loader" data-artists-loader hidden>
+      <span class="spinner" aria-hidden="true"></span>
+      <span class="sr-only">Loading…</span>
+    </div>
+
+    <ul class="artists__grid" data-artists-grid></ul>
+
+    <button class="btn btn--primary artists-more" data-artists-load hidden>
+      <span data-btn-text>Load More</span>
+      <svg class="icon-artists-learn-more" width="14" height="24">
+        <use href="/img/icons.svg#icon-learn-more-btn"></use>
+      </svg>
+      <span class="spinner spinner--btn" data-btn-spinner hidden></span>
+    </button>
+  </div>
+</section>

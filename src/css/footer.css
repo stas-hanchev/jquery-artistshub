@@ -1,0 +1,237 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+.footer {
+  background-color: #060307;
+  ;
+  color: #fff;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  width: 100%;
+
+}
+
+/* верхній ряд */
+.footer__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+/* логотип */
+.footer__logo {
+  /* height: 40px; */
+  width: auto;
+  display: flex;
+  /* align-items: center; */
+  align-items: flex-end;
+}
+
+/* навігація */
+.footer__nav ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  text-align: center;
+}
+
+.footer__link {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__link:hover {
+  color: #9b59b6;
+}
+
+.social-icn:hover {
+  fill: #9b59b6;
+}
+
+/* нижній ряд */
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+  padding-bottom: 16px;
+}
+
+.footer__copy {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+  margin: 0;
+}
+
+/* соцмережі */
+.footer__socials {
+  display: flex;
+  gap: 32px;
+}
+
+.footer__socials img {
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s;
+}
+
+.footer__socials a:hover img {
+  opacity: 0.7;
+}
+
+.logo-footer {
+  fill: #764191;
+}
+
+.social-icn {
+  fill: #fff;
+}
+
+/* ===== АДАПТИВ ===== */
+
+/* планшет і більше */
+@media (min-width: 768px) {
+  .footer {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .footer__container {
+    padding: 0 32px;
+  }
+
+  .footer__copy {
+    padding-bottom: 8px;
+  }
+
+  .footer__nav ul {
+    flex-direction: row;
+  }
+
+  .social-icn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer__bottom {
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    text-align: left;
+    padding-top: 32px;
+    padding-bottom: 0;
+  }
+
+  .footer__copy {
+    order: 1;
+  }
+
+  /* соцсети справа */
+  .footer__socials {
+    order: 2;
+  }
+}
+
+/* десктоп */
+@media (min-width: 1440px) {
+  .footer {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .footer__container {
+    padding: 0 64px;
+  }
+
+  .footer__nav ul {
+    gap: 32px;
+  }
+
+  .footer__logo img {
+    height: 48px;
+  }
+
+  .footer__socials img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .footer__top {
+    margin-bottom: 80px;
+  }
+
+  .footer__copy {
+    padding-bottom: 0;
+  }
+
+  .social-icn {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.footer-container {
+  max-width: 1440px;
+
+  margin: 0 auto;
+
+}
+
+.span_logo {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #764191;
+}
+
+.art-list {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+/* по умолчанию (мобилка) */
+.logo-footer--desktop {
+  display: none;
+}
+
+/* на планшете и ПК */
+@media (min-width: 768px) {
+  .logo-footer--mobile {
+    display: none;
+  }
+
+  .logo-footer--desktop {
+    display: block;
+  }
+
+  .span_logo {
+    display: none;
+  }
+}
