@@ -1,55 +1,53 @@
 import '../css/artist-modal.css';
+
+import $ from 'jquery';
 import axios from 'axios';
 import icons from '../img/icons.svg';
 
-export async function listenArtistsSection() {
-  const learnBtns = document.querySelectorAll('.learn-more');
-  const loader = document.querySelector('[data-artist-loader]');
+export function listenArtistsSection() {
+  const learnBtns = $('.learn-more');
+  const loader = $('[data-artist-loader]');
 
-  learnBtns.forEach(btn => {
-    btn.addEventListener('click', async () => {
-      loader.hidden = false;
-      const artistId = btn.dataset.id;
+  learnBtns.off('click').on('click', async function () {
+    loader.prop('hidden', false);
+    const artistId = $(this).attr('data-id');
 
-      try {
-        const response = await axios.get(`/artists/${artistId}/albums`);
-        const artist = response.data;
+    try {
+      const response = await axios.get(`/artists/${artistId}/albums`);
+      const artist = response.data;
 
-        const modal = document.querySelector('.artist-modal');
-        const modalContent = document.querySelector('.artist-info');
-        modalContent.innerHTML = renderArtistModal(artist);
-        modal.classList.remove('hidden-artist-modal');
-        document.body.classList.toggle("no-scroll");
-      } catch (error) {
-        const message = `Error while executing the request: ${error}`; 
-        console.error(message);
-        alert(`❌${message}`)
-      } finally {
-        loader.hidden = true;
-      }
-    });
+      const modalContent = $('.artist-info');
+      modalContent.html(renderArtistModal(artist));
+      modal.removeClass('hidden-artist-modal');
+      $('body').toggleClass('no-scroll');
+    } catch (error) {
+      const message = `Error while executing the request: ${error}`;
+      console.error(message);
+      alert(`❌${message}`);
+    } finally {
+      loader.prop('hidden', true);
+    }
   });
 }
 
-
-const modal = document.querySelector('.artist-modal');
-const closeBtn = document.querySelector('.close-artist-modal');
+const modal = $('.artist-modal');
+const closeBtn = $('.close-artist-modal');
 
 function closeModal() {
-  modal.classList.add('hidden-artist-modal');
-  document.body.classList.remove("no-scroll");
+  modal.addClass('hidden-artist-modal');
+  $('body').removeClass("no-scroll");
 }
 
-closeBtn.addEventListener('click', closeModal);
+closeBtn.on('click', closeModal);
 
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) {
+modal.on("click", e => {
+  if (e.target === e.currentTarget) {
     closeModal();
   }
 });
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !modal.classList.contains("hidden-artist-modal")) {
+$(document).on("keydown", e => {
+  if (e.key === "Escape" && !modal.hasClass("hidden-artist-modal")) {
     closeModal();
   }
 });

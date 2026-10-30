@@ -1,15 +1,12 @@
-import './js/artists-section.js';
 import './js/menu';
 import './js/artist-modal';
 import './js/feedback';
 import './js/artists-section';
 import './js/modal-feedback';
 import './js/modal';
-import './js/artist-filtr.js';
 
+import $ from 'jquery';
 import axios from 'axios';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
 
 import { getReviewsByQuery, handleReviews } from './js/feedback.js';
 import { getArtists, renderArtists } from './js/artists-section.js';
@@ -23,17 +20,15 @@ async function fetchData() {
   const currentPage = 1;
   const limit = 8;
 
-  const artistLoader = document.querySelector('[data-artists-loader]');
-  artistLoader.hidden = false;
+  const artistLoader = $('[data-artists-loader]');
+  artistLoader.prop('hidden', false);
 
-  const feedbackLoader = document.querySelector('[data-feedbacks-loader]');
-  feedbackLoader.hidden = false;
+  const feedbackLoader = $('[data-feedbacks-loader]');
+  feedbackLoader.prop('hidden', false);
 
   try {
     const artists = await getArtists(currentPage);
-    console.log(`Artists: ${JSON.stringify(artists)}`);
     const reviews = await getReviewsByQuery();
-    console.log(`Review: ${JSON.stringify(reviews)}`);
 
     await renderArtists(artists, currentPage, limit);
     listenArtistsSection();
@@ -43,8 +38,8 @@ async function fetchData() {
     console.error(message);
     alert(`❌${message}`);
   } finally {
-    artistLoader.hidden = true;
-    feedbackLoader.hidden = true;
+    artistLoader.prop('hidden', true);
+    feedbackLoader.prop('hidden', true);
   }
 }
 

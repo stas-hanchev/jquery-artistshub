@@ -1,20 +1,20 @@
-(() => {
+import $ from 'jquery';
+
+$(function () {
   const refs = {
-    openModalBtn: document.querySelector('[data-menu-open]'),
-    closeModalBtn: document.querySelector('[data-menu-close]'),
-    modal: document.querySelector('[data-menu]'),
-    menuLinks: document.querySelectorAll('.mobile-nav-style'),
+    openModalBtn: $('[data-menu-open]'),
+    closeModalBtn: $('[data-menu-close]'),
+    modal: $('[data-menu]'),
+    menuLinks: $('.mobile-nav-style'),
   };
 
   function toggleModal() {
-    refs.modal.classList.toggle('is-open');
+    refs.modal.toggleClass('is-open');
   }
 
-  refs.openModalBtn.addEventListener('click', toggleModal);
-  refs.closeModalBtn.addEventListener('click', toggleModal);
-  refs.menuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      refs.modal.classList.remove('is-open');
-    });
+  refs.openModalBtn.on('click', toggleModal);
+  refs.closeModalBtn.on('click', toggleModal);
+  refs.menuLinks.on('click', () => {
+    refs.modal.removeClass('is-open');
   });
-})();
+});

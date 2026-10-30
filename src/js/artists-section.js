@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import axios from 'axios';
 
 import { listenArtistsSection } from './artist-modal.js';
@@ -7,6 +8,7 @@ export async function getArtists(page = 1, limit = 8) {
   const response = await axios.get('/artists', {
     params: { page, limit },
   });
+
   return response.data;
 }
 
@@ -44,25 +46,22 @@ function createArtistCard(artist) {
 }
 
 export async function renderArtists(data, page, limit) {
-  const grid = document.querySelector('[data-artists-grid]');
-  const loadMoreBtn = document.querySelector('[data-artists-load]');
-  const loader = document.querySelector('[data-artists-loader]');
+  const grid = $('[data-artists-grid]');
+  const loadMoreBtn = $('[data-artists-load]');
+  const loader = $('[data-artists-loader]');
 
-  loader.hidden = false;
-  loadMoreBtn.hidden = true;
+  loader.prop('hidden', false);
+  loadMoreBtn.prop('hidden', true);
 
-  grid.insertAdjacentHTML(
-    'beforeend',
-    data.artists.map(createArtistCard).join('')
-  );
+  grid.append(data.artists.map(createArtistCard).join(''));
 
-  loader.hidden = true;
+  loader.prop('hidden', true);
 
   if (page * limit < data.totalArtists) {
-    loadMoreBtn.hidden = false;
+    loadMoreBtn.prop('hidden', false);
   }
 
-  loadMoreBtn?.addEventListener('click', async () => {
+  loadMoreBtn.off('click').on('click', async () => {
     page++;
     const artists = await getArtists(page);
     await renderArtists(artists, page, limit);

@@ -1,16 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+import $ from 'jquery';
+
+$(function() {
   const refs = {
-    openModalBtn: document.querySelector('[data-modal-open]'),
-    closeModalBtn: document.querySelector('[data-modal-close]'),
-    modal: document.querySelector('[data-modal]'),
+    openModalBtn: $('[data-modal-open]'),
+    closeModalBtn: $('[data-modal-close]'),
+    modal: $('[data-modal]'),
   };
 
-  if (refs.openModalBtn && refs.closeModalBtn && refs.modal) {
-    refs.openModalBtn.addEventListener('click', toggleModal);
-    refs.closeModalBtn.addEventListener('click', toggleModal);
+  if (refs.openModalBtn.length && refs.closeModalBtn.length && refs.modal.length) {
+    refs.openModalBtn.on('click', toggleModal);
+    refs.closeModalBtn.on('click', toggleModal);
 
     function toggleModal() {
-      refs.modal.classList.toggle('is-open');
+      refs.modal.toggleClass('is-open');
     }
   }
-});
+})
+

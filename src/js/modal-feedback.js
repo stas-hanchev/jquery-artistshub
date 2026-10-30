@@ -1,83 +1,78 @@
+import $ from 'jquery';
 import axios from 'axios';
-(() => {
+
+$(function () {
   const refs = {
-    openModalBtn: document.querySelector("[data-modal-feedback-open]"),
-    closeModalBtn: document.querySelector("[data-modal-feedback-close]"),
-    modal: document.querySelector("[data-modal-feedback]"),
-    form: document.querySelector(".feedback-form"),
+    openModalBtn: $('[data-modal-feedback-open]'),
+    closeModalBtn: $('[data-modal-feedback-close]'),
+    modal: $('[data-modal-feedback]'),
+    form: $('.feedback-form'),
   };
 
-  refs.openModalBtn.addEventListener("click", toggleModal);
-  refs.closeModalBtn.addEventListener("click", toggleModal);
+  refs.openModalBtn.on('click', toggleModal);
+  refs.closeModalBtn.on('click', toggleModal);
 
-  // закрытие по backdrop
-  refs.modal.addEventListener("click", (e) => {
-    if (e.target === refs.modal) closeModal();
+  refs.modal.on('click', e => {
+    if (e.target === refs.modal[0]) closeModal();
   });
 
-  // закрытие по Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !refs.modal.classList.contains("is-hidden")) {
+  $(document).on('keydown', e => {
+    if (e.key === 'Escape' && !refs.modal.hasClass('is-hidden')) {
       closeModal();
     }
   });
 
   function toggleModal() {
-    refs.modal.classList.toggle("is-hidden");
-    document.body.classList.toggle("no-scroll");
+    refs.modal.toggleClass('is-hidden');
+    $('body').toggleClass('no-scroll');
   }
 
   function closeModal() {
-    refs.modal.classList.add("is-hidden");
-    document.body.classList.remove("no-scroll");
+    refs.modal.addClass('is-hidden');
+    $('body').removeClass('no-scroll');
   }
 
-  // рейтинг
-  const stars = document.querySelectorAll(".rating-feedback-modal .star");
+  const stars = $('.rating-feedback-modal .star');
   let currentRating = 0;
 
-  stars.forEach((star, index) => {
-    star.addEventListener("click", () => {
-      currentRating = index + 1;
-      stars.forEach((s, i) => {
-        s.classList.toggle("active", i < currentRating);
-      });
+  stars.on('click', function () {
+    currentRating = stars.index(this) + 1;
+    stars.each((i, s) => {
+      $(s).toggleClass('active', i < currentRating);
     });
   });
 
-  // отправка формы
-  refs.form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  refs.form.on('submit', async e => {
+    e.preventDefault();
 
-  const name = refs.form.elements["name"].value.trim();
-  const descr = refs.form.elements["message"].value.trim();
-  const rating = currentRating;
+    const name = refs.form.find('[name="name"]').val().trim();
+    const descr = refs.form.find('[name="message"]').val().trim();
+    const rating = currentRating;
 
-  if (name.length < 2 || name.length > 16) {
-    alert("Ім’я має бути від 2 до 16 символів.");
-    return;
-  }
-  if (rating < 1 || rating > 5) {
-    alert("Оберіть рейтинг від 1 до 5 зірок.");
-    return;
-  }
-  if (descr.length < 10 || descr.length > 512) {
-    alert("Повідомлення має бути від 10 до 512 символів.");
-    return;
-  }
+    if (name.length < 2 || name.length > 16) {
+      alert('Ім’я має бути від 2 до 16 символів.');
+      return;
+    }
+    if (rating < 1 || rating > 5) {
+      alert('Оберіть рейтинг від 1 до 5 зірок.');
+      return;
+    }
+    if (descr.length < 10 || descr.length > 512) {
+      alert('Повідомлення має бути від 10 до 512 символів.');
+      return;
+    }
 
-  try {
-    const response = await axios.post('/feedbacks', { name, rating, descr });
+    try {
+      await axios.post('/feedbacks', { name, rating, descr });
 
-    closeModal();
-    refs.form.reset();
-    currentRating = 0;
-    stars.forEach((s) => s.classList.remove("active"));
+      closeModal();
+      refs.form[0].reset();
+      currentRating = 0;
+      stars.removeClass('active');
 
-    alert("Дякуємо за відгук!");
-  } catch (err) {
-    alert("Не вдалося відправити відгук: " + err.message);
-  }
+      alert('Дякуємо за відгук!');
+    } catch (err) {
+      alert('Не вдалося відправити відгук: ' + err.message);
+    }
+  });
 });
-
-})();
