@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/Falcons-2",
+    "build": "vite build",
+    "build:gh": "vite build --base=/jquery-artistshub/",
     "preview": "vite preview"
   },
   "devDependencies": {
